@@ -1,13 +1,60 @@
-import React, { useState } from 'react';
+import React, { isValidElement, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFacebookF, faTwitter, faGithub, faGoogle } from '@fortawesome/free-brands-svg-icons';
 import rocket from '../images/rocket.svg'
 import desk from '../images/desk.svg'
 import './Login.css'
+import firebaseConfig from '../firebase.config';
+import firebase from "firebase/app";
+import "firebase/auth";
+
+
+firebase.initializeApp(firebaseConfig)
+
+
 
 const Login = () => {
     const [mode, setMode] = useState('');
-    console.log(mode)
+    const [user, setUser] = useState({
+        isSignedIn: false,
+        name: '',
+        email: '',
+        photo: ''
+    })
+
+
+    const GoogleProvider = new firebase.auth.GoogleAuthProvider();
+
+    const handleSignIn = () =>{
+        firebase.auth().signInWithPopup(GoogleProvider)
+        .then(res => {
+            console.log(res.user);
+        })
+    }
+
+    // Number Password Email valid
+    const handelBlur = (e) => {
+            let isFromValid = true;
+        if(e.target.name === 'email'){
+            isFromValid = /\S+@\S+\.\S+/.test(e.target.value);
+        }
+        if(e.target.name === 'password'){
+            const isPasswordValid = e.target.value.length > 6;
+            isFromValid = isPasswordValid;
+        }
+        if(isFromValid){
+            
+            console.log(e.target.name ,e.target.value)
+        }
+            
+    }
+
+    const handleSignInSubmit = (e) =>{
+        e.preventDefault();
+        console.log('submit done')
+    }
+
+
 
     const signUpBtnHandle = () => {
         setMode('sign-up-mode')
@@ -21,20 +68,21 @@ const Login = () => {
         <div className={`container ${mode}`}>
             <div className="forms-container">
                 <div className="signin-signup">
-                <form action="#" className="sign-in-form">
+                <form onSubmit={handleSignInSubmit} className="sign-in-form">
                     <h2 className="title">Sign in</h2>
+                    <p>Email:{user.email}</p>
                     <div className="input-field">
                         <i className="fas fa-user"></i>
-                        <input type="text" placeholder="Username" />
+                        <input type="text" name='email' placeholder="Email" onChange={handelBlur} required />
                     </div>
                     <div className="input-field">
                         <i className="fas fa-lock"></i>
-                        <input type="password" placeholder="Password" />
+                        <input type="password" name='password' placeholder="Password" onChange={handelBlur} required />
                     </div>
                     <input type="submit" value="Login" className="btn solid" />
                     <p className="social-text">Or Sign in with social platforms</p>
                     <div className="social-media">
-                    <a href="#" className="social-icon">
+                    <a onClick={handleSignIn} href="#" className="social-icon">
                         <FontAwesomeIcon icon={faGoogle} />
                     </a>
                     <a href="#" className="social-icon">
@@ -52,7 +100,7 @@ const Login = () => {
                     <h2 className="title">Sign up</h2>
                     <div className="input-field">
                     <i className="fas fa-user"></i>
-                    <input type="text" placeholder="Username" />
+                    <input type="text" placeholder="Name" />
                     </div>
                     <div className="input-field">
                     <i className="fas fa-envelope"></i>
@@ -103,7 +151,7 @@ const Login = () => {
                     Lorem ipsum dolor sit amet consectetur adipisicing elit. Nostrum
                     laboriosam ad deleniti.
                     </p>
-                    <button onClick={signINBtnHandle} className="btn transparent" id="sign-in-btn">
+                    <button onClick={signINBtnHandle}  className="btn transparent" id="sign-in-btn">
                     Sign in
                     </button>
                 </div>
