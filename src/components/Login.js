@@ -158,11 +158,11 @@ const Login = () => {
                     <a onClick={handleSignInGoogle} href="#" className="social-icon">
                         <FontAwesomeIcon icon={faGoogle} />
                     </a>
-                    <a onClick={handleSignInGithub} href="#" className="social-icon">
-                        <FontAwesomeIcon icon={faGithub} /> 
-                    </a>
                     <a onClick={handleSignInFacebook} href="#" className="social-icon">
                         <FontAwesomeIcon icon={faFacebookF} />
+                    </a>
+                    <a onClick={handleSignInGithub} href="#" className="social-icon">
+                        <FontAwesomeIcon icon={faGithub} /> 
                     </a>
                     <a onClick={handleSignInYahoo} href="#" className="social-icon">
                         <FontAwesomeIcon icon={faYahoo} />
@@ -186,16 +186,16 @@ const Login = () => {
                     <input type="submit" className="btn" value="Sign up" />
                     <p className="social-text">Or Sign up with social platforms</p>
                     <div className="social-media">
-                    <a href="#" className="social-icon">
+                    <a onClick={handleSignInGoogle} href="#" className="social-icon">
                         <FontAwesomeIcon icon={faGoogle} />
                     </a>
-                    <a href="#" className="social-icon">
-                        <FontAwesomeIcon icon={faGithub} /> 
-                    </a>
-                    <a href="#" className="social-icon">
+                    <a onClick={handleSignInFacebook} href="#" className="social-icon">
                         <FontAwesomeIcon icon={faFacebookF} />
                     </a>
-                    <a href="#" className="social-icon">
+                    <a onClick={handleSignInGithub} href="#" className="social-icon">
+                        <FontAwesomeIcon icon={faGithub} /> 
+                    </a>
+                    <a onClick={handleSignInYahoo} href="#" className="social-icon">
                         <FontAwesomeIcon icon={faYahoo} />
                     </a>
                     </div>
