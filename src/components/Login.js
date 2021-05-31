@@ -1,6 +1,6 @@
 import React, { isValidElement, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faFacebookF, faTwitter, faGithub, faGoogle } from '@fortawesome/free-brands-svg-icons';
+import { faFacebookF, faYahoo, faGithub, faGoogle } from '@fortawesome/free-brands-svg-icons';
 import rocket from '../images/rocket.svg'
 import desk from '../images/desk.svg'
 import './Login.css'
@@ -9,9 +9,14 @@ import firebase from "firebase/app";
 import "firebase/auth";
 
 
-firebase.initializeApp(firebaseConfig)
+// firebase.initializeApp(firebaseConfig)
 
-
+if (!firebase.apps.length) {
+    firebase.initializeApp(firebaseConfig);
+ }else {
+    firebase.app(); // if already initialized, use that one
+ }
+ 
 
 const Login = () => {
     const [mode, setMode] = useState('');
@@ -19,17 +24,71 @@ const Login = () => {
         isSignedIn: false,
         name: '',
         email: '',
-        photo: ''
-    })
+        password: '',
+        photo: '',
+        error: '',
+        success: false
+    });
+
+    console.log(user)
 
 
     const GoogleProvider = new firebase.auth.GoogleAuthProvider();
+    const FacebookProvider = new firebase.auth.FacebookAuthProvider();
+    const GithubProvider = new firebase.auth.GithubAuthProvider();
+    const YahooProvider = new firebase.auth.OAuthProvider('yahoo.com');
 
-    const handleSignIn = () =>{
+
+    const handleSignInGoogle = () =>{
         firebase.auth().signInWithPopup(GoogleProvider)
         .then(res => {
             console.log(res.user);
         })
+    }
+    const handleSignInFacebook = () =>{
+        firebase.auth().signInWithPopup(FacebookProvider)
+        .then((result) => {
+            var credential = result.credential;
+            var user = result.user;
+            var accessToken = credential.accessToken;
+            console.log(user);
+        })
+        .catch((error) => {
+            var errorCode = error.code;
+            var errorMessage = error.message;
+            var email = error.email;
+            var credential = error.credential;
+            console.log(errorCode, errorMessage, email, credential)
+        });
+    }
+
+    const handleSignInGithub = () => {
+        firebase.auth().signInWithPopup(GithubProvider)
+        .then((result) => {
+            var credential = result.credential;
+            var token = credential.accessToken;
+            var user = result.user;
+            console.log(user)
+        }).catch((error) => {
+            var errorCode = error.code;
+            var errorMessage = error.message;
+            var email = error.email;
+            var credential = error.credential;
+            console.log(errorCode, errorMessage, email, credential)
+        });
+    }
+
+    const handleSignInYahoo =()=>{
+        firebase.auth().signInWithPopup(YahooProvider)
+        .then((result) => {
+            const credential = result.credential;
+            var accessToken = credential.accessToken;
+            var idToken = credential.idToken;
+            console.log(result)
+        })
+        .catch((error) => {
+            console.log(error)
+        });
     }
 
     // Number Password Email valid
@@ -43,16 +102,30 @@ const Login = () => {
             isFromValid = isPasswordValid;
         }
         if(isFromValid){
-            
-            console.log(e.target.name ,e.target.value)
-        }
-            
-    }
+            const newUserInfo = {...user}
+            newUserInfo[e.target.name] = e.target.value;
+            setUser(newUserInfo);
+        }    
+    };
 
     const handleSignInSubmit = (e) =>{
         e.preventDefault();
-        console.log('submit done')
-    }
+        if(user.email && user.password){
+            firebase.auth().createUserWithEmailAndPassword(user.email, user.password)
+            .then(res => {
+                const newUserInfo = {...user}
+                newUserInfo.error = '';
+                newUserInfo.success = true;
+                setUser(newUserInfo);
+            })
+            .catch((error) => {
+                // var errorCode = error.code;
+                var errorMessage = error.message;
+                const newUserInfo = {...user};
+                newUserInfo.error= errorMessage;
+                newUserInfo.success = false;
+            })
+        }}
 
 
 
@@ -82,17 +155,17 @@ const Login = () => {
                     <input type="submit" value="Login" className="btn solid" />
                     <p className="social-text">Or Sign in with social platforms</p>
                     <div className="social-media">
-                    <a onClick={handleSignIn} href="#" className="social-icon">
+                    <a onClick={handleSignInGoogle} href="#" className="social-icon">
                         <FontAwesomeIcon icon={faGoogle} />
                     </a>
-                    <a href="#" className="social-icon">
+                    <a onClick={handleSignInGithub} href="#" className="social-icon">
                         <FontAwesomeIcon icon={faGithub} /> 
                     </a>
-                    <a href="#" className="social-icon">
+                    <a onClick={handleSignInFacebook} href="#" className="social-icon">
                         <FontAwesomeIcon icon={faFacebookF} />
                     </a>
-                    <a href="#" className="social-icon">
-                        <FontAwesomeIcon icon={faTwitter} />
+                    <a onClick={handleSignInYahoo} href="#" className="social-icon">
+                        <FontAwesomeIcon icon={faYahoo} />
                     </a>
                     </div>
                 </form>
@@ -123,7 +196,7 @@ const Login = () => {
                         <FontAwesomeIcon icon={faFacebookF} />
                     </a>
                     <a href="#" className="social-icon">
-                        <FontAwesomeIcon icon={faTwitter} />
+                        <FontAwesomeIcon icon={faYahoo} />
                     </a>
                     </div>
                 </form>
