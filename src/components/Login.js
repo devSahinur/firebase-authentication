@@ -9,7 +9,7 @@ import firebase from "firebase/app";
 import "firebase/auth";
 
 
-// firebase.initializeApp(firebaseConfig)
+firebase.initializeApp(firebaseConfig)
 
 if (!firebase.apps.length) {
     firebase.initializeApp(firebaseConfig);
@@ -30,7 +30,7 @@ const Login = () => {
         success: false
     });
 
-    console.log(user)
+
 
 
     const GoogleProvider = new firebase.auth.GoogleAuthProvider();
@@ -125,7 +125,7 @@ const Login = () => {
                 newUserInfo.error= errorMessage;
                 newUserInfo.success = false;
             })
-        }}
+        }};
 
 
 
