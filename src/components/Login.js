@@ -1,4 +1,4 @@
-import React, { isValidElement, useState } from 'react';
+import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFacebookF, faYahoo, faGithub, faGoogle } from '@fortawesome/free-brands-svg-icons';
 import rocket from '../images/rocket.svg'

@@ -1,4 +1,7 @@
 import React from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faFacebookF, faInstagram, faGithub, faTwitter } from '@fortawesome/free-brands-svg-icons';
+import { faEnvelope } from '@fortawesome/free-solid-svg-icons'
 import img from './img/profile.jpg'
 import './UserProfile.css'
 
@@ -11,7 +14,7 @@ const UserProfile = () => {
                     <div className="centers"></div>
                 </div>
                 <a href="#" className="mails">
-                    <i className="far fa-envelope"></i>
+                     <FontAwesomeIcon icon={faEnvelope} />
                 </a>
                 <div className="mains">
                     <div style={{background: `url(${img}) no-repeat center / cover`}} className="images">
@@ -32,23 +35,23 @@ const UserProfile = () => {
                     </div>
                     <div className="icons-containers">
                         <a href="#" className="icons">
-                            <i className="fab fa-facebook"></i>
+                            <FontAwesomeIcon icon={faFacebookF} />
                         </a>
                         <a href="#" className="icons">
-                            <i className="fab fa-instagram"></i>
+                             <FontAwesomeIcon icon={faGithub} />  
                         </a>
                         <a href="#" className="icons">
-                            <i className="fab fa-google-plus-g"></i>
+                            <FontAwesomeIcon icon={faInstagram} />
                         </a>
                         <a href="#" className="icons">
-                            <i className="fab fa-twitter"></i>
+                            <FontAwesomeIcon icon={faTwitter} />
                         </a>
                     </div>
                     <div className="buttons-wraps">
                         <div className="follow-wraps">
                             <a href="#" className="follows">Follow</a>
                         </div>
-                        <div className="share-wrap">
+                        <div className="share-wraps">
                             <a href="#" className="shares">Share</a>
                         </div>
                     </div>
