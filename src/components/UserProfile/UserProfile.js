@@ -1,7 +1,7 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faFacebookF, faInstagram, faGithub, faTwitter } from '@fortawesome/free-brands-svg-icons';
-import { faEnvelope } from '@fortawesome/free-solid-svg-icons'
+import { faFacebook, faInstagram, faGithub, faTwitter } from '@fortawesome/free-brands-svg-icons';
+import { faSignOutAlt } from '@fortawesome/free-solid-svg-icons'
 import img from './img/profile.jpg'
 import './UserProfile.css'
 
@@ -14,7 +14,7 @@ const UserProfile = () => {
                     <div className="centers"></div>
                 </div>
                 <a href="#" className="mails">
-                     <FontAwesomeIcon icon={faEnvelope} />
+                     <FontAwesomeIcon icon={faSignOutAlt} />
                 </a>
                 <div className="mains">
                     <div style={{background: `url(${img}) no-repeat center / cover`}} className="images">
@@ -35,7 +35,7 @@ const UserProfile = () => {
                     </div>
                     <div className="icons-containers">
                         <a href="#" className="icons">
-                            <FontAwesomeIcon icon={faFacebookF} />
+                            <FontAwesomeIcon icon={faFacebook} />
                         </a>
                         <a href="#" className="icons">
                              <FontAwesomeIcon icon={faGithub} />  

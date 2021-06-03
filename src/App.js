@@ -7,7 +7,7 @@ import {
 } from "react-router-dom";
 import UserProfile from './components/UserProfile/UserProfile';
 
-const UserContext = createContext();
+export const UserContext = createContext();
 
 function App() {
   const [loggedInUser, setLoggedInUser] = useState({});

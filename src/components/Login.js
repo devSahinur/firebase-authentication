@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFacebookF, faYahoo, faGithub, faGoogle } from '@fortawesome/free-brands-svg-icons';
 import rocket from '../images/rocket.svg'
@@ -7,10 +7,11 @@ import './Login.css'
 import firebaseConfig from '../firebase.config';
 import firebase from "firebase/app";
 import "firebase/auth";
+import { UserContext } from '../App';
 
 
 firebase.initializeApp(firebaseConfig)
-
+ 
 if (!firebase.apps.length) {
     firebase.initializeApp(firebaseConfig);
  }else {
@@ -19,6 +20,7 @@ if (!firebase.apps.length) {
  
 
 const Login = () => {
+    const [loggedInUser, setLoggedInUser] = useContext(UserContext);
     const [mode, setMode] = useState('');
     const [user, setUser] = useState({
         isSignedIn: false,
@@ -32,7 +34,6 @@ const Login = () => {
 
 
 
-
     const GoogleProvider = new firebase.auth.GoogleAuthProvider();
     const FacebookProvider = new firebase.auth.FacebookAuthProvider();
     const GithubProvider = new firebase.auth.GithubAuthProvider();
@@ -42,16 +43,27 @@ const Login = () => {
     const handleSignInGoogle = () =>{
         firebase.auth().signInWithPopup(GoogleProvider)
         .then(res => {
-            console.log(res.user);
+            const { displayName, photoURL, email } = res.user;
+            const signedInUser = {
+                isSignedIn: true,
+                name: displayName,
+                email: email,
+                photo: photoURL || "https://i.ibb.co/5GzXkwq/user.png"
+            }
+            setLoggedInUser(signedInUser);
         })
     }
     const handleSignInFacebook = () =>{
         firebase.auth().signInWithPopup(FacebookProvider)
-        .then((result) => {
-            var credential = result.credential;
-            var user = result.user;
-            var accessToken = credential.accessToken;
-            console.log(user);
+        .then((res) => {
+            const { displayName, photoURL, email } = res.user;
+            const signedInUser = {
+                isSignedIn: true,
+                name: displayName,
+                email: email,
+                photo: photoURL || "https://i.ibb.co/5GzXkwq/user.png"
+            }
+            setLoggedInUser(signedInUser);
         })
         .catch((error) => {
             var errorCode = error.code;
@@ -64,12 +76,17 @@ const Login = () => {
 
     const handleSignInGithub = () => {
         firebase.auth().signInWithPopup(GithubProvider)
-        .then((result) => {
-            var credential = result.credential;
-            var token = credential.accessToken;
-            var user = result.user;
-            console.log(user)
-        }).catch((error) => {
+        .then((res) => {
+            const { displayName, photoURL, email } = res.user;
+            const signedInUser = {
+                isSignedIn: true,
+                name: displayName,
+                email: email,
+                photo: photoURL || "https://i.ibb.co/5GzXkwq/user.png"
+            }
+            setLoggedInUser(signedInUser);
+        })
+        .catch((error) => {
             var errorCode = error.code;
             var errorMessage = error.message;
             var email = error.email;
@@ -80,11 +97,15 @@ const Login = () => {
 
     const handleSignInYahoo =()=>{
         firebase.auth().signInWithPopup(YahooProvider)
-        .then((result) => {
-            const credential = result.credential;
-            var accessToken = credential.accessToken;
-            var idToken = credential.idToken;
-            console.log(result)
+        .then((res) => {
+            const { displayName, photoURL, email } = res.user;
+            const signedInUser = {
+                isSignedIn: true,
+                name: displayName,
+                email: email,
+                photo: photoURL || "https://i.ibb.co/5GzXkwq/user.png"
+            }
+            setLoggedInUser(signedInUser);
         })
         .catch((error) => {
             console.log(error)
