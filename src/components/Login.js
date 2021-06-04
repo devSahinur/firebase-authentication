@@ -71,6 +71,7 @@ const Login = () => {
                 photo: photoURL || "https://i.ibb.co/5GzXkwq/user.png"
             }
             setLoggedInUser(signedInUser);
+            history.replace(from);
         })
         .catch((error) => {
             var errorCode = error.code;
@@ -92,6 +93,7 @@ const Login = () => {
                 photo: photoURL || "https://i.ibb.co/5GzXkwq/user.png"
             }
             setLoggedInUser(signedInUser);
+            history.replace(from);
         })
         .catch((error) => {
             var errorCode = error.code;
@@ -113,6 +115,7 @@ const Login = () => {
                 photo: photoURL || "https://i.ibb.co/5GzXkwq/user.png"
             }
             setLoggedInUser(signedInUser);
+            history.replace(from);
         })
         .catch((error) => {
             console.log(error)
