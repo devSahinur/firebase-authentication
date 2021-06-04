@@ -1,11 +1,14 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFacebook, faInstagram, faGithub, faTwitter } from '@fortawesome/free-brands-svg-icons';
 import { faSignOutAlt } from '@fortawesome/free-solid-svg-icons'
 import img from './img/profile.jpg'
 import './UserProfile.css'
+import { UserContext } from '../../App';
 
 const UserProfile = () => {
+    const [loggedInUser, setLoggedInUser] = useContext(UserContext)
+    console.log(loggedInUser);
     return (
         <div className="containers">
         <div className="cards">
@@ -17,13 +20,11 @@ const UserProfile = () => {
                      <FontAwesomeIcon icon={faSignOutAlt} />
                 </a>
                 <div className="mains">
-                    <div style={{background: `url(${img}) no-repeat center / cover`}} className="images">
-                        <div className="hovers">
-                            <i className="fas fa-camera fa-2x"></i>
-                        </div>
+                    <div style={{background: `url(${loggedInUser}) no-repeat center / cover`}} className="images">
+                        <img className="profile-imag" src={loggedInUser.photo} alt="" />
                     </div>
-                    <h3 className="names">John Doe</h3>
-                    <h3 className="sub-names">@J_Doe</h3>
+                    <h3 className="names">{loggedInUser.name}</h3>
+                    <h3 className="sub-names">{loggedInUser.email}</h3>
                 </div>
             </div>
 

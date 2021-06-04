@@ -6,6 +6,7 @@ import {
   Route
 } from "react-router-dom";
 import UserProfile from './components/UserProfile/UserProfile';
+import PrivateRoute from './components/PrivateRoute/PrivateRoute';
 
 export const UserContext = createContext();
 
@@ -15,9 +16,9 @@ function App() {
     <UserContext.Provider value={[loggedInUser, setLoggedInUser]}>
       <Router>
         <Switch>
-          <Route path='/' exact>
+          <PrivateRoute path='/' exact>
             <UserProfile/>
-          </Route>
+          </PrivateRoute>
           <Route path='/login' exact>
             <Login/>
           </Route>

@@ -8,6 +8,7 @@ import firebaseConfig from '../firebase.config';
 import firebase from "firebase/app";
 import "firebase/auth";
 import { UserContext } from '../App';
+import { useHistory, useLocation } from 'react-router';
 
 
 firebase.initializeApp(firebaseConfig)
@@ -21,6 +22,10 @@ if (!firebase.apps.length) {
 
 const Login = () => {
     const [loggedInUser, setLoggedInUser] = useContext(UserContext);
+    const history = useHistory();
+    const location = useLocation();
+    const { from } = location.state || { from: { pathname: "/" } };
+
     const [mode, setMode] = useState('');
     const [user, setUser] = useState({
         isSignedIn: false,
@@ -31,6 +36,7 @@ const Login = () => {
         error: '',
         success: false
     });
+    console.log(loggedInUser);
 
 
 
@@ -51,6 +57,7 @@ const Login = () => {
                 photo: photoURL || "https://i.ibb.co/5GzXkwq/user.png"
             }
             setLoggedInUser(signedInUser);
+            history.replace(from);
         })
     }
     const handleSignInFacebook = () =>{
