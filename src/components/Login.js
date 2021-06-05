@@ -25,6 +25,7 @@ const Login = () => {
     const history = useHistory();
     const location = useLocation();
     const { from } = location.state || { from: { pathname: "/" } };
+    
 
     const [mode, setMode] = useState('');
     const [user, setUser] = useState({
@@ -162,10 +163,12 @@ const Login = () => {
 
     const signUpBtnHandle = () => {
         setMode('sign-up-mode')
+        document.title = "Sign Up ";
     }
     
     const signINBtnHandle = () =>{
         setMode('')
+        document.title = "Login";
     }
 
     return (

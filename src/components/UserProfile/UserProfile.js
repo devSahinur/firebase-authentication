@@ -7,7 +7,8 @@ import './UserProfile.css'
 import { UserContext } from '../../App';
 
 const UserProfile = () => {
-    const [loggedInUser, setLoggedInUser] = useContext(UserContext)
+    const [loggedInUser, setLoggedInUser] = useContext(UserContext);
+    document.title = "Profile";
     console.log(loggedInUser);
     return (
         <div className="containers">
